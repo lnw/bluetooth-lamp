@@ -53,12 +53,10 @@ def main():
     child.sendline('scan on')
     child.expect('Device.*' + address + '.*')
     child.sendline('scan off') 
-    # child.expect(prompt)
     
     child.sendline('connect ' + address)
     child.expect('Connection successful')
     child.expect('Characteristic')
-    # time.sleep(3.0)
     
     child.sendline('menu gatt')
     child.expect('Menu gatt:')
