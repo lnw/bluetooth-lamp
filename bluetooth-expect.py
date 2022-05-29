@@ -7,7 +7,6 @@ import time
 def clamp(val, minval, maxval):
     return min(max(val, minval), maxval)
 
-
 def pwd2hex(pwd):
     hexkeystring = ""
     for char in pwd:
@@ -47,9 +46,6 @@ def set_brightness(child, brightness):
 def main():
     prompt = '#'
     address = '48:70:1E:4E:44:0C'
-    pwd = str(1436)
-    brightness = 100
-    colour = 6500
     child = pexpect.spawn('sudo bluetoothctl')
     child.logfile = sys.stdout.buffer
     child.expect(prompt)
@@ -67,9 +63,14 @@ def main():
     child.sendline('menu gatt')
     child.expect('Menu gatt:')
     
+    pwd = str(1436)
     set_pwd(child, pwd)
-    # set_brightness(child, brightness)
-    # set_colour(child, colour)
+    # brightness = 100
+    brightness = int(sys.argv[1])
+    set_brightness(child, brightness)
+    # colour = 6500
+    colour = int(sys.argv[2])
+    set_colour(child, colour)
     
     child.sendline("back")
     child.expect(prompt)
